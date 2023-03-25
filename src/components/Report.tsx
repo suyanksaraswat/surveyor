@@ -31,9 +31,15 @@ export function Report() {
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button
         onClick={() => {
-
           //@ts-ignore
-          html2pdf(element, { html2canvas: { scale: 4 } });
+          html2pdf(element, {
+            margin: [15, 15],
+            filename: "pdfFileName.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 4, letterRendering: true },
+            jsPDF: { unit: "pt", format: "letter", orientation: "portrait" },
+            pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+          });
         }}
       >
         download
@@ -176,11 +182,7 @@ export function Report() {
                     {files?.map((res: any, i: number) => (
                       <tr key={i}>
                         <td>
-                          <img
-                            src={res}
-                            alt=""
-                            style={{ width: "600px" }}
-                          />
+                          <img src={res} alt="" style={{ width: "600px" }} />
                         </td>
                       </tr>
                     ))}
